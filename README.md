@@ -51,3 +51,7 @@ It is triggered by PUT event of an txt file, the content of which is the transcr
 ### 5. ``store_text.py``
 
 After receiving the text format of response. It will connect to AWS Polly client to take the response and change it into voice. We selected the common voice for in-car voice assistant and English as the target language. For the text output, it will be directly passed to the front end; for the audio output, it will be stored in another S3 bucket and fetched by the front end after completion. 
+
+
+#Part 2: video demo
+https://www.youtube.com/watch?v=UCCTZZNVjl8
