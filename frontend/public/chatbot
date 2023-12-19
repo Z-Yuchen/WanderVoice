@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WanderVoice</title>
+<link rel="stylesheet" href="cover.css">
+<style>
+
+  body { font-family: Arial, sans-serif; }
+  .container { width: 90%; margin: auto; text-align: center; }
+  .voice-box { margin-top: 20px; padding: 20px; background-color: #eee; border-radius: 10px; }
+  .button { padding: 10px 20px; background-color: #5c54d9; color: white; border: none; border-radius: 5px; cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>WanderVoice</h1>
+  <div class="voice-box">
+    <p>Hello there! How may I assist you today?</p>
+    <button class="button" onclick="startListening()">Start Listening</button>
+  </div>
+  <!-- Add more of your application's HTML elements here -->
+</div>
+
+<script>
+  // Add your JavaScript for voice recognition here
+  function startListening() {
+    console.log("Voice recognition started");
+    // Implementation for voice recognition would go here
+  }
+</script>
+</body>
+</html>

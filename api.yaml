@@ -1,0 +1,247 @@
+swagger: '2.0'
+info:
+  title: WanderVoice
+  description: 'AI In-car Voice Assistant, explore more about your destination, built during the COMSE6998 at Columbia University.'
+  version: 1.0.0
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /login/in:
+    post:
+      summary: The endpoint for the Login lambda connecting with DynamoDB.
+      description: |
+        This API takes in username and password from the client and returns
+        success or failure message as response. The API connects with login
+        backend functionality, checking if the login info is in the database
+        and returns a true-fail reply.
+      tags:
+        - API
+      operationId: sendLogin
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/LoginRequest'
+      responses:
+        '200':
+          description: A backend response
+          schema:
+            $ref: '#/definitions/LoginResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /login/signup:
+    post:
+      summary: The endpoint for the Signup lambda connecting with DynamoDB.
+      description: |
+        This API takes in username and password from the client and returns
+        success or failure message as response. The API connects with login
+        backend functionality, checking if the login info is in the database
+        and returns a true-fail reply.
+      tags:
+        - API
+      operationId: Signup
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/LoginRequest'
+      responses:
+        '200':
+          description: A backend response
+          schema:
+            $ref: '#/definitions/LoginResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /wandervoice/tourguide:
+    post:
+      summary: The endpoint for the lambda for further process of client input.
+      description: |
+        This API get user's input in form of text or voice, and send to lambda for further process. If it is voice, send to trasition component.
+      tags:
+        - API
+      operationId: GuideMessage
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/TourTextRequest'
+      responses:
+        '200':
+          description: A backend response
+          schema:
+            $ref: '#/definitions/TourResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /wandervoice/recomm/text:
+    get:
+      summary:  /wandervoice/recomm/text
+      description:  /wandervoice/recomm/text
+      tags:
+        - API
+      operationId: RecommendTextMessage
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: q
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A backend response
+          schema:
+            $ref: '#/definitions/RecommTextResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /wandervoice/recomm/audio:
+    put:
+      summary: The endpoint for the lambda for further process of client input for recommendation function.
+      description: |
+        This API get user's input in form of text or voice, and send to lambda for recommendation. If it is voice, send to trasition component.
+      tags:
+        - API
+      operationId: RecommendMessage
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/RecommendRequest'
+      responses:
+        '200':
+          description: A backend response
+          schema:
+            $ref: '#/definitions/RecommendResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  LoginRequest:
+    type: object
+    properties:
+      username:
+        type: string
+      password: 
+        type: string
+  LoginResponse:
+    type: object
+    properties:
+      response:
+        type: boolean
+  TourTextRequest:
+    type: object
+    properties:
+      model:
+        type: integer
+      messages:
+        type: array
+        items:
+          $ref: '#/definitions/Message'
+  TourResponse:
+    type: object
+    properties:
+      messages:
+        type: object
+        items:
+          $ref: '#/definitions/AudioMessage'
+  RecommendRequest:
+    type: object
+    properties:
+      messages:
+        type: object
+        items:
+          $ref: '#/definitions/AudioMessage'
+          
+  RecommTextResponse:
+    type: object
+    properties:
+      mp3url:
+        type: string
+      text:
+        type: string
+  RecommendResponse:
+    type: object
+    properties:
+      messages:
+        type: array
+        items:
+          $ref: '#/definitions/RecommendMessage'
+  AudioMessage:
+    type: object
+    properties:
+      audio: 
+        type: string
+        format: byte 
+  Message:
+    type: object
+    properties:
+      type:
+        type: string
+      unstructured:
+        $ref: '#/definitions/UnstructuredMessage'
+  RecommendMessage:
+    type: object
+
+  UnstructuredMessage:
+    type: object
+    properties:
+      id:
+        type: string
+      voice:
+        type: string # voice URL
+      text:
+        type: string
+      timestamp:
+        type: string
+        format: datetime
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
