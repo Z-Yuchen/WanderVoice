@@ -46,7 +46,7 @@ It is triggered by PUT event of an MP3 file. After receiving the MP3 file, the f
 
 ### 4. ``chatbot.py``
 
-It is triggered by PUT event of an txt file, the content of which is the transcribed text. The function will can Amadeus and Ticketmaster APIs based on the current timestamp and retrieve real-time data about hotel booking information and upcoming events. Restricted by the usage of those APIs, the current version of application only supports searching within New York City. Second part of $chatbot.py$ implements the chatbot function. Given the searched result mentioned above, this function will call OpenAI API with a prompt to get the response in text.
+It is triggered by PUT event of an txt file, the content of which is the transcribed text. The function will call Amadeus and Ticketmaster APIs based on the current timestamp and retrieve real-time data about hotel booking information and upcoming events. Restricted by the usage of those APIs, the current version of application only supports searching within New York City. Second part of $chatbot.py$ implements the chatbot function. Given the searched result mentioned above, this function will call OpenAI API with a prompt to get the response in text.
 
 ### 5. ``store_text.py``
 
